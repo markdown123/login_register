@@ -21,8 +21,7 @@
         <div class="rember">
           <div class="rember-pwd">
             <input
-              type="radio"
-            />记住我
+              type="checkbox"  @click="change($event)"            />记住我
             <a href="#">了解更多</a>
           </div>
         </div>
@@ -69,7 +68,11 @@ export default {
           },
         ],
       },
+      check: 'checked'
     };
+  },
+  created() {
+    this.getData()
   },
   methods: {
     async login() {
@@ -90,10 +93,26 @@ export default {
         }
         window.localStorage.setItem("token", res.data.token);
        
-        window.localStorage.setItem("phone", this.loginForm.phone);
-        window.localStorage.setItem("password", this.loginForm.password);
+        
       });
     },
+    getData() {
+      this.loginForm.phone = window.localStorage.getItem('phone')
+      this.loginForm.password = window.localStorage.getItem('password')
+    },
+    change(e) {
+      console.log(e.target.checked);
+      if(e.target.checked) {
+        console.log('1');
+      window.localStorage.setItem("phone", this.loginForm.phone);
+        window.localStorage.setItem("password", this.loginForm.password);
+      } else {
+        console.log('2');
+        window.localStorage.removeItem('phone')
+        window.localStorage.removeItem('password')
+      }
+      console.log(e.target.checked);
+    }
   },
 };
 </script>
